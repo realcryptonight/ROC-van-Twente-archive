@@ -1,0 +1,30 @@
+<html>
+	<head>
+		<title>Themepark database | Account</title>
+	</head>
+	<body>
+		<header>
+		[logindata]
+		</header>
+		<h1>Change username</h1>
+		<form method="post">
+			<label for="username">New username:</label><br>
+			<input type="text" id="username" name="username"><br>
+			<label for="password">Current password:</label><br>
+			<input type="password" id="password" name="password"><br>
+			<input type="submit" value="Change username" name="newusername">
+		</form>
+		<div class="usernamemessage"></div>
+		<h1>Change password</h1>
+		<form method="post">
+			<label for="oldpassword">Current password:</label><br>
+			<input type="password" id="oldpassword" name="oldpassword"><br>
+			<label for="password">New password:</label><br>
+			<input type="password" id="password" name="password"><br>
+			<label for="cpassword">Repeat new password:</label><br>
+			<input type="password" id="cpassword" name="cpassword"><br>
+			<input type="submit" value="Change password" name="newpassword">
+		</form>
+		<div class="passwordmessage"></div>
+	</body>
+</html>

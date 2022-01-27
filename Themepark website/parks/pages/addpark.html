@@ -1,0 +1,28 @@
+<html>
+	<head>
+		<title>Themepark database | Add park</title>
+	</head>
+	<body>
+		<header>
+		[logindata]
+		</header>
+		<h1>Add park to the database</h1>
+		<form method="post">
+			<label for="parkname">Park name:</label><br>
+			<input type="text" id="parkname" name="parkname"><br>
+			<label for="opensince">Open since:</label><br>
+			<input type="date" id="opensince" name="opensince"><br>
+			<label for="parkowner">Park owner:</label><br>
+			<input type="text" id="parkowner" name="parkowner"><br>
+			<label for="country">Country:</label><br>
+			<select id="country" name="country">
+			  [countryoptions]
+			</select><br>
+			<label for="parkaddress">Park address:</label><br>
+			<input type="text" id="parkaddress" name="parkaddress"><br>
+			<input type="submit" value="Add" name="Add">
+		</form>
+		<div class="message"></div>
+		<a href="./index.php">Go back</a>
+	</body>
+</html>

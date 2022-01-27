@@ -1,0 +1,39 @@
+<html>
+	<head>
+		<title>Themepark database | Add coaster</title>
+	</head>
+	<body>
+		<header>
+		[logindata]
+		</header>
+		<h1>Add coaster to the database</h1>
+		<form method="post">
+			<label for="coastername">Coaster name:</label><br>
+			<input type="text" id="coastername" name="coastername"><br>
+			<label for="coasterpark">Coaster park:</label><br>
+			<select id="coasterpark" name="coasterpark">
+			  [parkoptions]
+			</select><br>
+			<label for="buildyear">Build year:</label><br>
+			<input type="date" id="buildyear" name="buildyear"><br>
+			
+			<label for="manufacturer">Manufacturer:</label><br>
+			<select id="manufacturer" name="manufacturer">
+			  [manufactureroptions]
+			</select><br>
+			
+			<label for="coastertype">Coaster type:</label><br>
+			<select id="coastertype" name="coastertype">
+			  [coastertypeoptions]
+			</select><br>
+			<label for="coasterheight">Coaster height:</label><br>
+			<input type="number" step="0.01" id="coasterheight" name="coasterheight"><br>
+			<label for="coasterspeed">Coaster speed:</label><br>
+			<input type="number" step="0.01" id="coasterspeed" name="coasterspeed"><br>
+			<label for="coastergforce">Coaster G-Force:</label><br>
+			<input type="number" step="0.01" id="coastergforce" name="coastergforce"><br>
+			<input type="submit" value="Add" name="Add">
+		</form>
+		<div class="message"></div>
+	</body>
+</html>

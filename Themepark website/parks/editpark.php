@@ -1,0 +1,64 @@
+<?php
+	require(__DIR__ . "/../login/authenticate.php");
+	require(__DIR__ . "/backend/proccessor.php");
+	
+	// Check if the user is logged in.
+	// If not then redirect to the login page.
+	if(authenticate()["success"] != "true"){
+		header('Location: /login/');
+	}
+	
+	// Check if an park get parameter is given.
+	// If not then redirect to the index.php
+	if(empty($_GET["park"])){
+		header('Location: ./index.php');
+	}
+	
+	// Check if the templete page file exists and get its contents if it does.
+	if(file_exists(__DIR__ . "/pages/changepark.html")){
+		// The templete file exists. So we can load it in.
+		$page = file_get_contents(__DIR__ . "/pages/changepark.html");
+	} else {
+		// The templete files does not exists. We cannot continue. So just die.
+		die("Sorry but we cannot display the edit park page at the moment. Please try again later.");
+	}
+	
+	// If the update button is clicked then try to update the data in the database.
+	// Or this goes well or it will fail but that does not need extra handling.
+	if(isset($_POST["Update"])){
+		$result = updatePark($_POST["parkid"], $_POST["parkname"], $_POST["opensince"], $_POST["parkowner"], $_POST["country"], $_POST["parkaddress"]);
+		$page = str_replace("<div class=\"message\"></div>", "<div class=\"message\">" . $result["message"] . "</div>", $page);
+	}
+	
+	// Now get the coaster information that is given.
+	$parkid = htmlspecialchars($_GET["park"], ENT_QUOTES);
+	$parkdetails = getSpecificPark($parkid);
+	// If it fails then redirect to the index.php
+	if(empty($parkdetails)){
+		header('Location: ./index.php');
+	}
+	
+	// Prefill the form with the current values from the database.
+	$page = str_replace("<input type=\"hidden\" id=\"parkid\" name=\"parkid\" value=\"\">", "<input type=\"hidden\" id=\"parkid\" name=\"parkid\" value=\"" . $parkid . "\">", $page);
+	$page = str_replace("<input type=\"text\" id=\"parkname\" name=\"parkname\">", "<input type=\"text\" id=\"parkname\" name=\"parkname\" value=\"" . $parkdetails[0]["name"] . "\">", $page);
+	$page = str_replace("<input type=\"date\" id=\"opensince\" name=\"opensince\">", "<input type=\"date\" id=\"opensince\" name=\"opensince\" value=\"" . $parkdetails[0]["open_since"] . "\">", $page);
+	$page = str_replace("<input type=\"text\" id=\"parkowner\" name=\"parkowner\">", "<input type=\"text\" id=\"parkowner\" name=\"parkowner\" value=\"" . $parkdetails[0]["owner"] . "\">", $page);
+	$page = str_replace("<input type=\"text\" id=\"parkaddress\" name=\"parkaddress\">", "<input type=\"text\" id=\"parkaddress\" name=\"parkaddress\" value=\"" . $parkdetails[0]["address"] . "\">", $page);
+	
+	// Display some user info since we know that there is an logged in user.
+	$page = str_replace("[logindata]", "Logged in as: " . getUsername()["message"] . " <a href=\"/login/logout.php\">Logout</a> <a href=\"/account/\">Account</a>", $page);
+	
+	// Couple of handlers for getting all the required data from the database.
+	// This will ensure that the data will be link correct when inserted.
+	$countries = getAllCountries();
+	$countryoptions = "";
+	foreach($countries as $country){
+		if($country["name"] == $parkdetails[0]["country"]){
+			$countryoptions .= "<option value=\"". $country["id"] . "\" selected>" . $country["id"] . " " . $country["name"] . "</option>";
+		} else {
+			$countryoptions .= "<option value=\"". $country["id"] . "\">" . $country["id"] . " " . $country["name"] . "</option>";
+		}
+	}
+	$page = str_replace("[countryoptions]", $countryoptions,$page);
+	echo $page;
+?>
